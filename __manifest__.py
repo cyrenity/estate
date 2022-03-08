@@ -2,12 +2,12 @@
     'name': "Realestate",
     'version': '1.3',
     'depends': ['base'],
-    'author': "bitVizor Consulting",
+    'author': "bitVizor Consulting <info@bitvizor.com>",
     'category': 'Sales/CRM',
     'installable': True,
     'application': True,
     'description': """
-    Realestate App by IQAAI Marketing
+        Realestate App by IQAAI Marketing
     """,
     'data': [
         'security/ir.model.access.csv',
