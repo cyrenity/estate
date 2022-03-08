@@ -27,7 +27,6 @@
         <field name="arch" type="xml">
             <tree string="Channel">
                 <field name="name" />
-
             </tree>
         </field>
     </record>
