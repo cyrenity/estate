@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<odoo><data noupdate="1">
-
-    <record id="estate_property_prop" model="estate.property">
-        <field name="name">A Test Property</field>
-	<field name="description">A Test property is a test property</field>
-	<field name="date_availability">2022-01-02 00:00:01</field>
-    </record>
-
-</data></odoo>
+<odoo>
+    <!-- <data noupdate="1">
+        <record id="estate_property_prop" model="estate.property">
+            <field name="name">A Test Property</field>
+            <field name="description">A Test property is a test property</field>
+            <field name="date_availability">2022-01-02 00:00:01</field>
+        </record>
+    </data> -->
+</odoo>

@@ -18,3 +18,4 @@ class EstatePropertyOffer(models.Model):
     partner_id = fields.Many2one("res.partner", string="Partner", copy=False)
     property_id = fields.Many2one("estate.property", string="Property")
     
+    

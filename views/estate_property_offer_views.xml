@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <odoo>
-
-
     <record id="view_estate_property_offer_search" model="ir.ui.view">
         <field name="name">estate.property.offer.search</field>
         <field name="model">estate.property.offer</field>

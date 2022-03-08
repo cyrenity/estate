@@ -109,6 +109,7 @@
                                     <field name="offer_ids" nolabel="1" />
                                 </group>
                             </page>
+                            
                         </notebook>
                     </group>
                 </sheet>
