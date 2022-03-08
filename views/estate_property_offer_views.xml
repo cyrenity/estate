@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record id="view_estate_property_offer_search" model="ir.ui.view">
+        <field name="name">estate.property.offer.search</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <search string="Offers">
+                <field name="price"/>
+                <field name="status"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="estate_property_offer_action" model="ir.actions.act_window">
+        <field name="name">Property Offers</field>
+        <field name="search_view_id" ref="view_estate_property_offer_search"/>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="estate_property_offer_view_tree" model="ir.ui.view">
+        <field name="name">estate.property.offer.tree</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="price" />
+                <field name="partner_id" />
+                <field name="property_id" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="estate_property_offer_view_form" model="ir.ui.view">
+        <field name="name">estate_property_offer_view_form</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+
+            <form string="Estate Property Offer">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="price" string="Price"/>
+                        <field name="price" class="o_text_overflow"/>
+
+                        <label for="partner_id" string="Partner"/>
+                        <field name="partner_id"/>
+
+                        <label for="status" string="Status"/>
+                        <field name="status" />
+
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+</odoo>

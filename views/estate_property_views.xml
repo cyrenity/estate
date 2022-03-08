@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record id="view_estate_property_search" model="ir.ui.view">
+        <field name="name">estate.property.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search string="Esates">
+                <field name="name"/>
+                <field name="description"/>
+                <filter string="Properties with Garden" name="dham" domain="[('garden', '=', True)]"/>
+                <separator/>
+                <field name="garden_orientation"/>
+                <group expand="0" string="Group By">
+                    <filter string="Garden Orientation" name="garden_orientation_type" domain="" context="{'group_by':'garden_orientation'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="search_view_id" ref="view_estate_property_search"/>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="estate_property_view_tree" model="ir.ui.view">
+        <field name="name">estate.property.tree</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="name" />
+                <field name="postcode" />
+                <field name="bed_rooms" />
+                <field name="living_area" />
+                <field name="expected_price" />
+                <field name="selling_price" />
+                <field name="date_availability" />
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="estate_property_view_form" model="ir.ui.view">
+        <field name="name">estate_property_view_form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+
+            <form string="Estate Property">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name" string="Propery"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="o_text_overflow"/>
+                        </h1>
+                        <div class="oe_edit_only">
+                            <label for="tag_ids" string="Tags"/>
+                        </div>
+                        <field name="tag_ids" widget="many2many_tags" class="mb32"/>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="property_type_id"/>                    
+                            <field name="postcode" />
+                            <field name="date_availability" />
+                        </group>
+                        <group>
+                            <field name="expected_price" />
+                            <field name="selling_price" />
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <div class='oe_edit_only'>
+                                    <label for="description">Description</label>
+                                </div>
+                                <div class="lead">
+                                    <field name="description" nolabel="1"/>
+                                </div>
+                                <group>
+                                    <group class="mt20" string="Basic Features">
+                                        <field name="bed_rooms" />
+                                        <field name="living_area" />
+                                        <field name="facades" />
+                                        <field name="garage" />
+                                    </group>
+                                    <group class="mt20" string="Garden">
+                                        <field name="garden" />
+                                        <field name="garden_area" />
+                                        <field name="garden_orientation" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Other Info">
+                                <group class="mt20">
+                                    <field name="salesperson" />
+                                    <field name="buyer" />
+                                </group>
+                            </page>                            
+                            <page string="Offers">
+                                <group>
+                                    <field name="offer_ids" nolabel="1" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>
