@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class EstateProperty(models.Model):
@@ -38,7 +39,12 @@ class EstateProperty(models.Model):
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     total_area = fields.Float(compute="_compute_total_area")
-    best_offer = fields.Float(compute="_compute_best_offer")
+    best_offer = fields.Float(compute="_compute_best_offer")    
+    
+    _sql_constraints = [
+        ('check_expected_price', 'CHECK(expected_price >=0)', 'The expected price must a positive number.'),
+        ('check_selling_price', 'CHECK(selling_price >=0 OR selling_price=null)', 'The selling price must a positive number.'),
+    ]
     
     @api.depends("living_area", "garden_area", "garden")
     def _compute_total_area(self):
@@ -52,5 +58,24 @@ class EstateProperty(models.Model):
     @api.depends("offer_ids")
     def _compute_best_offer(self):
         for record in self:
-            record.best_offer = max(record.offer_ids.mapped("price"))
+            try:
+                record.best_offer = max(record.offer_ids.mapped("price"))
+            except ValueError:
+                record.best_offer = 0
                 
+    @api.onchange("garden")
+    def _onchange_partner_id(self):
+        self.garden_area = 10
+        self.garden_orientation = "north"
+        
+    def action_cancel_property(self):
+        for record in self:
+            if record.state == 'sold':
+                raise UserError(_('A Sold property can not be canceled.'))
+        return self.write({'state': 'canceled'})
+    
+    def action_sold_property(self):
+        for record in self:
+            if record.state == 'canceled':
+                raise UserError(_('A Canceled property can not be sold.'))
+        return self.write({'state': 'sold'})

@@ -48,6 +48,19 @@
                         </h1>
                         <field name="active" invisible="1"/>
                     </div>
+                    <notebook>
+                        <page string="Properties">
+                            <group>
+                                <field name="property_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="expected_price"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
