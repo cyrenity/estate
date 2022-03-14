@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, ValidationError
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Realestate Property Offer"
+    _order = "price desc"
     
     price = fields.Float('Offer Amount', required=True)
     
@@ -23,11 +24,25 @@ class EstatePropertyOffer(models.Model):
     validity = fields.Integer("Offer Validity", default=7)
     date_deadline = fields.Date(compute="_compute_date_deadline", inverse="_inverse_date_deadline")
     
-    
     _sql_constraints = [
         ('check_offer_price', 'CHECK(price > 0)', 'The offer price must a positive number.'),
     ]
         
+        
+        
+    @api.model
+    def create(self, vals):
+        max_offer = self.env['estate.property.offer'].search([('property_id','=', vals['property_id'])], order='price desc', limit=1)
+        
+        if int(vals['price']) <= int(max_offer['price']):
+            raise ValidationError("The offer [%d] should be higher than [%d]" % (int(vals['price']), int(max_offer['price'])))
+        
+        # Set parent state
+        self.env['estate.property'].browse(vals['property_id']).state = 'offer_received'
+        
+        return super().create(vals)
+    
+    
         
     @api.constrains('price')
     def _check_offer_price(self):
@@ -50,6 +65,9 @@ class EstatePropertyOffer(models.Model):
                 
     def action_accept_offer(self):
         for record in self:
+            if record.property_id.state == 'offer_accepted':
+                raise UserError("Already accepted an offer for this property")
+
             if record.property_id.state not in('sold', 'canceled'):
                 record.property_id.selling_price = record.price
                 record.property_id.state = 'offer_accepted'

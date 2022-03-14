@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "A Realestate Property"
+    _order = "id desc"
 
     name = fields.Char('Property Name', required=True, translate=True)
     description = fields.Text('Description', required=True, translate=True)
@@ -45,6 +46,12 @@ class EstateProperty(models.Model):
         ('check_expected_price', 'CHECK(expected_price >=0)', 'The expected price must a positive number.'),
         ('check_selling_price', 'CHECK(selling_price >=0 OR selling_price=null)', 'The selling price must a positive number.'),
     ]
+    
+    
+    @api.ondelete(at_uninstall=False)
+    def _unlink_record(self):
+        if self.state not in('new', 'canceled'):
+            raise UserError(_('Only a canceled or new property can be deleted.'))
     
     @api.depends("living_area", "garden_area", "garden")
     def _compute_total_area(self):

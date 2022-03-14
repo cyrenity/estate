@@ -8,8 +8,10 @@
         <field name="arch" type="xml">
             <search string="Esates">
                 <field name="name"/>
-                <field name="description"/>
-                <filter string="Properties with Garden" name="dham" domain="[('garden', '=', True)]"/>
+                <field name="description" string="Name and description" 
+                    filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"/>
+                <field name="living_area" filter_domain="[('living_area', '>', self)]" />
+                <filter string="Available" name="available_properties" domain="[('state', 'in', ('offer_received', 'new'))]"/>
                 <separator/>
                 <field name="garden_orientation"/>
                 <group expand="0" string="Group By">
@@ -23,6 +25,7 @@
     <record id="estate_property_action" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="search_view_id" ref="view_estate_property_search"/>
+        <field name="context">{'search_default_available_properties': 1}</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -31,14 +34,20 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Channel" 
+                    decoration-success="state in ('offer_received', 'offer_accepted')" 
+                    decoration-bf="state == 'offer_accepted'"
+                    decoration-muted="state == 'sold'" >
+
                 <field name="name" />
                 <field name="postcode" />
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
                 <field name="bed_rooms" />
-                <field name="living_area" />
+                <field name="living_area"  />
                 <field name="expected_price" />
                 <field name="selling_price" />
                 <field name="date_availability" />
+                <field name="state" invisible="1" />
 
             </tree>
         </field>
@@ -118,7 +127,7 @@
                             </page>                            
                             <page string="Offers">
                                 <group>
-                                    <field name="offer_ids" nolabel="1" attrs="{'readonly': [('state', 'not in', ('new','offer_received'))]}"  options="{'editable': false}" />
+                                    <field name="offer_ids" nolabel="1" attrs="{'readonly': [('state', 'not in', ('new','offer_received'))]}"/>
                                 </group>
                             </page>
                         </notebook>
