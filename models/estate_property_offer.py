@@ -52,7 +52,7 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             if record.property_id.state not in('sold', 'canceled'):
                 record.property_id.selling_price = record.price
-                record.property_id.state = 'sold'
+                record.property_id.state = 'offer_accepted'
                 record.property_id.buyer = record.partner_id
             else:
                 raise UserError("Cannot accept an offer for a Sold/Canceled Property")

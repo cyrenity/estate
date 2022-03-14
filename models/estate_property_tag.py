@@ -8,6 +8,7 @@ class EstatePropertyTag(models.Model):
     _name = "estate.property.tag"
     _description = "Realestate Property Tags"
     name = fields.Char('Property Tags', required=True)
+    color = fields.Integer('Tag Color')
     active = fields.Boolean('Active', default=True)
     
     _sql_constraints = [

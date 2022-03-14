@@ -28,8 +28,8 @@
                 <field name="price" />
                 <field name="partner_id" />
                 <field name="status" />
-                <button name="action_accept_offer" string="Accept" type="object" icon="fa-check"/>
-                <button name="action_refuse_offer" string="Refuse" type="object" icon="fa-close"/>
+                <button name="action_accept_offer" string="Accept" type="object" icon="fa-check"  attrs="{'invisible': ['|', ('status', '=', 'accepted'), ('status', '=', 'refused')]}" />
+                <button name="action_refuse_offer" string="Refuse" type="object" icon="fa-close"  attrs="{'invisible': ['|', ('status', '=', 'accepted'), ('status', '=', 'refused')]}" />
             </tree>
         </field>
     </record>

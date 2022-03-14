@@ -51,8 +51,9 @@
         <field name="arch" type="xml">
             <form string="Estate Property">
                 <header>
-                    <button name="action_cancel_property" string="Cancel" type="object" />
-                    <button name="action_sold_property" string="Sold" type="object" />
+                    <button name="action_cancel_property" string="Cancel" type="object" states="offer_accepted" />
+                    <button name="action_sold_property" string="Sold" type="object" states="offer_accepted" />
+                    <field name="state" widget="statusbar" statusbar_visible="new,canceled,sold,offer_received,offer_accepted"/>
                 </header>
 
                 <sheet>
@@ -67,13 +68,12 @@
                         <div class="oe_edit_only">
                             <label for="tag_ids" string="Tags"/>
                         </div>
-                        <field name="tag_ids" widget="many2many_tags" class="mb32"/>
+                        <field name="tag_ids" widget="many2many_tags" class="mb32" options="{'color_field': 'color'}"/>
                         <field name="active" invisible="1"/>
                     </div>
                     <group>
                         <group>
-                            <field name="state"/>                    
-                            <field name="property_type_id"/>                    
+                            <field name="property_type_id" options="{'no_create': True, 'no_open': True}"/>                    
                             <field name="postcode" />
                             <field name="date_availability" />
                         </group>
@@ -102,8 +102,8 @@
                                     </group>
                                     <group class="mt20" string="Garden">
                                         <field name="garden" />
-                                        <field name="garden_area" />
-                                        <field name="garden_orientation" />
+                                        <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
+                                        <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
                                     </group>
                                     <group class="mt20" string="Total">
                                         <field name="total_area" />
@@ -118,7 +118,7 @@
                             </page>                            
                             <page string="Offers">
                                 <group>
-                                    <field name="offer_ids" nolabel="1" />
+                                    <field name="offer_ids" nolabel="1" attrs="{'readonly': [('state', 'not in', ('new','offer_received'))]}"  options="{'editable': false}" />
                                 </group>
                             </page>
                         </notebook>
