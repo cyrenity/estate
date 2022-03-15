@@ -1,10 +1,109 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <!-- <data noupdate="1">
-        <record id="estate_property_prop" model="estate.property">
+    <data>
+
+        <!--
+        Resource: res.partner.category
+        -->
+        <record id="res_partner_category_0" model="res.partner.category">
+            <field name="name">Vendor</field>
+            <field name="color" eval="2"/>
+        </record>
+        <record id="res_partner_category_2" model="res.partner.category">
+            <field name="name">Prospects</field>
+            <field name="color" eval="3"/>
+        </record>
+        <record id="res_partner_category_3" model="res.partner.category">
+            <field name="name">Employees</field>
+            <field name="color" eval="4"/>
+        </record>
+        <record id="res_partner_category_8" model="res.partner.category">
+            <field name="name">Consulting Services</field>
+            <field name="color" eval="5"/>
+        </record>
+        <record id="res_partner_category_11" model="res.partner.category">
+            <field name="name">Services</field>
+            <field name="color" eval="7"/>
+        </record>
+        <record id="res_partner_category_12" model="res.partner.category">
+            <field name="name">Office Supplies</field>
+            <field name="parent_id" ref="res_partner_category_0"/>
+            <field name="color" eval="8"/>
+        </record>
+        <record id="res_partner_category_14" model="res.partner.category">
+            <field name="name">Desk Manufacturers</field>
+            <field name="color" eval="10"/>
+            <field name="parent_id" ref="res_partner_category_0"/>
+        </record>
+
+
+        <record id="res_partner_99" model="res.partner">
+            <field name="name">Wood Corner</field>
+            <field eval="[Command.set([ref('res_partner_category_14'), ref('res_partner_category_12')])]" name="category_id"/>
+            <field name="is_company">1</field>
+            <field name="street">1839 Arbor Way</field>
+            <field name="city">Turlock</field>
+            <field name="zip">95380</field>
+            <field name="email">wood.corner26@example.com</field>
+            <field name="phone">(623)-853-7197</field>
+            <field name="website">http://www.wood-corner.com</field>
+        </record>
+        <record id="res_partner_98" model="res.partner">
+            <field name="name">Deco Addict</field>
+            <field eval="[Command.set([ref('res_partner_category_14')])]" name="category_id"/>
+            <field name="is_company">1</field>
+            <field name="street">77 Santa Barbara Rd</field>
+            <field name="city">Pleasant Hill</field>
+            <field name="zip">94523</field>
+            <field name="email">deco.addict82@example.com</field>
+            <field name="phone">(603)-996-3829</field>
+            <field name="website">http://www.deco-addict.com</field>
+        </record>
+        
+
+
+        <record id="estate_property_tag_99" model="estate.property.tag">
+            <field name="name">main boulverd</field>
+        </record>             
+        <record id="estate_property_tag_97" model="estate.property.tag">
+            <field name="name">double road</field>
+        </record>          
+        
+        <record id="estate_property_type_99" model="estate.property.type">
+            <field name="name">DHA Villa</field>
+        </record>        
+        <record id="estate_property_type_98" model="estate.property.type">
+            <field name="name">DHA Apartment</field>
+        </record>        
+        <record id="estate_property_type_97" model="estate.property.type">
+            <field name="name">DHA Plot</field>
+        </record>
+
+        
+        <record id="estate_property_99" model="estate.property">
             <field name="name">A Test Property</field>
             <field name="description">A Test property is a test property</field>
             <field name="date_availability">2022-01-02 00:00:01</field>
+            <field name="bed_rooms">2</field>
+            <field name="living_area">2000</field>
+            <field name="garage">1</field>
+            <field name="postcode">051</field>
+            <field name="expected_price">180</field>
+            <field name="property_type_id" ref="estate_property_type_99" />
+            <field name="tag_ids" eval="[(6, 0, [ref('estate_property_tag_99'), ref('estate_property_tag_97')])]" />
+        </record>  
+        
+        <record id="estate_property_offer_99" model="estate.property.offer">
+            <field name="price">200</field>
+            <field name="property_id" ref="estate_property_99"/>
+            <field name="partner_id" ref="res_partner_98"/>
+        </record>        
+
+        <record id="estate_property_offer_98" model="estate.property.offer">
+            <field name="price">210</field>
+            <field name="property_id" ref="estate_property_99"/>
+            <field name="partner_id" ref="res_partner_99"/>
         </record>
-    </data> -->
+
+    </data>
 </odoo>

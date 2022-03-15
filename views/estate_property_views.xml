@@ -92,7 +92,7 @@
         <field name="arch" type="xml">
             <form string="Estate Property">
                 <header>
-                    <button name="action_cancel_property" string="Cancel" type="object" states="offer_accepted" />
+                    <button name="action_cancel_property" string="Cancel" type="object" states="offer_received,offer_accepted" />
                     <button name="action_sold_property" string="Sold" type="object" states="offer_accepted" />
                     <field name="state" widget="statusbar" statusbar_visible="new,canceled,sold,offer_received,offer_accepted"/>
                 </header>
